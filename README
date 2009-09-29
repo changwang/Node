@@ -1,0 +1,24 @@
+Consider a network G=(V,E) with E bidirectional channels. 
+The nodes of the network are identified with the integers 1, 2, 3, ..., N.
+
+Node 1 needs to know the identifications of each node as well as its neighbor identifications,
+so node 1 broadcasts a message with its request.
+
+Write an efficient program that will accomplish the above request.
+
+Count the total number of hops that will be traveled, in both directions,
+in order to accomplish the above task. Efficient means to minimize the overall number of hops.
+Also compute the longest path (in number of hops) that a message will travel from node 1
+to some other node in the network - this is called the diameter of the network.
+
+Run your program for
+	1. a 10-node ring
+	2. a degree 4 hypercube
+	3. a 12-node complete graph
+	
+Submit: Your program;
+		The total cost in hops;
+		The diameters
+		
+A report with some discussion about your program as well an analysis of the program
+with the calculation of its complexity.  
