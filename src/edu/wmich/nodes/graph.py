@@ -6,9 +6,9 @@ Created on Sep 28, 2009
 
 class Graph:
     """ Graph represents the whole network,
-        which contains the nodes in this network,
-        as well as the channels.
-        """
+    which contains the nodes in this network,
+    as well as the channels.
+    """
 
     def __init__(self, nodes):
         self.nodes = nodes
@@ -28,12 +28,35 @@ class Graph:
                 return self.nodes[i]
 
 class Ring(Graph):
-    pass
+    """ Ring graph with node connected with two nodes beside it. """
+    
+    def __init__(self, nodes):
+        Graph.__init__(self, nodes)
+        
+    def connect_nodes(self):
+        for i in range(len(self.nodes)):
+            self.nodes[i].neighbors = self.__neighbors(self.nodes[i])
+    
+    def __neighbors(self, node):
+        _neighbors = []
+        
+        if node.get_id() == 1:
+            _neighbors.append(len(self.nodes))
+            _neighbors.append(node.get_id() - 1)
+        elif node.get_id() == len(self.nodes):
+            _neighbors.append(1)
+            _neighbors.append(node.get_id() - 1)
+        else:
+            _neighbors.append(node.get_id() - 1)
+            _neighbors.append(node.get_id() + 1)
+        return _neighbors
 
 class Hypercube(Graph):
     pass
 
 class CompleteGraph(Graph):
+    """ Complete Graph with the node connected with each other nodes """
+    
     def __init__(self, nodes):
         Graph.__init__(self, nodes)
 
