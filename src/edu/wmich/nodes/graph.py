@@ -4,6 +4,8 @@ Created on Sep 28, 2009
 @author: changwang
 '''
 
+from edu.wmich.nodes.node import Node
+
 class Graph:
     """ Graph represents the whole network,
     which contains the nodes in this network,
@@ -42,18 +44,25 @@ class Ring(Graph):
         _neighbors = []
         
         if node.get_id() == 1:
-            _neighbors.append(len(self.nodes))
-            _neighbors.append(node.get_id() - 1)
+            _neighbors.append(Node(len(self.nodes)))
+            _neighbors.append(Node(node.get_id() + 1))
         elif node.get_id() == len(self.nodes):
-            _neighbors.append(1)
-            _neighbors.append(node.get_id() - 1)
+            _neighbors.append(Node(1))
+            _neighbors.append(Node(node.get_id() - 1))
         else:
-            _neighbors.append(node.get_id() - 1)
-            _neighbors.append(node.get_id() + 1)
+            _neighbors.append(Node(node.get_id() - 1))
+            _neighbors.append(Node(node.get_id() + 1))
         return _neighbors
 
 class Hypercube(Graph):
-    pass
+    def __init__(self, nodes):
+        Graph.__init__(self, nodes)
+        
+    def connect_nodes(self):
+        pass
+    
+    def __neighbors(self, node):
+        pass
 
 class CompleteGraph(Graph):
     """ Complete Graph with the node connected with each other nodes """
@@ -70,5 +79,5 @@ class CompleteGraph(Graph):
         
         for i in range(len(self.nodes)):
             if node.get_id() != self.nodes[i].get_id():
-                _neighbors.append(self.nodes[i].get_id())
+                _neighbors.append(self.nodes[i])
         return _neighbors

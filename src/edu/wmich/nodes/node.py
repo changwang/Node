@@ -14,15 +14,18 @@ class Node:
     def __init__(self, id):
         self.id = id
         self.neighbors = []
-
+        
     def broadcast(self, msg):
         pass
 
     def __str__(self):
-        return str(self.id)
+        return "Node: " + str(self.id)
 
     def get_id(self):
         return self.id
+    
+    def has_neighbors(self):
+        return len(self.neighbors) > 0
 
     def get_neighbors(self):
         return self.neighbors
