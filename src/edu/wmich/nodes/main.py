@@ -18,3 +18,4 @@ if __name__ == '__main__':
     node2 = rg.get_node(7)
     
     node2.get_neighbors()
+    

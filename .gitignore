@@ -2,3 +2,5 @@
 *.out
 .project
 .pydevproject
+*.class
+.*

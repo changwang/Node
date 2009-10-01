@@ -17,7 +17,8 @@ class Graph:
         return len(self.nodes)
 
     def channel_count(self):
-        pass
+        return sum([x.get_neighbors_count() for x in self.nodes]) / 2
+        
 
     def connect_nodes(self):
         raise NotImplementedError("You should implement this method")

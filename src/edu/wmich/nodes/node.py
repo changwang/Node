@@ -25,8 +25,7 @@ class Node:
         return self.id
 
     def get_neighbors(self):
-        for i in range(len(self.neighbors)):
-            print self.neighbors[i]
+        return self.neighbors
 
     def get_neighbors_count(self):
         return len(self.neighbors)
