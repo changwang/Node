@@ -24,7 +24,6 @@ def tree_generator(graph, root_id):
         if tree.has_knot(knot):
             temp_children.remove(knot)
         else:
-#            knot.init_children(tree)
             __init_children(knot, temp_children)
             tree.add_knot(knot)
             for k in knot.get_children():

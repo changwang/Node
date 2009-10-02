@@ -63,62 +63,29 @@ class Hypercube(Graph):
     def __neighbors(self, node):
         _neighbors = []
         id = node.get_id()
-        if id <=8:
+        
+        if id % 4 == 1:
+            _neighbors.append(self.get_node(id+1))
+            _neighbors.append(self.get_node(id+3))
+        elif id % 4 == 2 or id % 4 == 3:
+            _neighbors.append(self.get_node(id-1))
+            _neighbors.append(self.get_node(id+1))
+        elif id % 4 == 0:
+            _neighbors.append(self.get_node(id-1))
+            _neighbors.append(self.get_node(id-3))
             
+        if id <= 8:
             if id <= 4:
-                if id % 4 == 1:
-                    _neighbors.append(self.get_node(id+1))
-                    _neighbors.append(self.get_node(id+3))
-                elif id % 4 == 2 or id % 4 == 3:
-                    _neighbors.append(self.get_node(id-1))
-                    _neighbors.append(self.get_node(id+1))
-                elif id % 4 == 0:
-                    _neighbors.append(self.get_node(id-1))
-                    _neighbors.append(self.get_node(id-3))
-                    
                 _neighbors.append(self.get_node(id+4))
-                _neighbors.append(self.get_node(id+8))
-                
             else:
-                if id % 4 == 1:
-                    _neighbors.append(self.get_node(id+1))
-                    _neighbors.append(self.get_node(id+3))
-                elif id % 4 == 2 or id % 4 == 3:
-                    _neighbors.append(self.get_node(id-1))
-                    _neighbors.append(self.get_node(id+1))
-                elif id % 4 == 0:
-                    _neighbors.append(self.get_node(id-1))
-                    _neighbors.append(self.get_node(id-3))
-                    
                 _neighbors.append(self.get_node(id-4))
-                _neighbors.append(self.get_node(id+8))
+            _neighbors.append(self.get_node(id+8))
         else:
-            if id <= 12:
-                if id % 4 == 1:
-                    _neighbors.append(self.get_node(id+1))
-                    _neighbors.append(self.get_node(id+3))
-                elif id % 4 == 2 or id % 4 == 3:
-                    _neighbors.append(self.get_node(id-1))
-                    _neighbors.append(self.get_node(id+1))
-                elif id % 4 == 0:
-                    _neighbors.append(self.get_node(id-1))
-                    _neighbors.append(self.get_node(id-3))
-                    
+            if id <=8:
                 _neighbors.append(self.get_node(id+4))
-                _neighbors.append(self.get_node(id-8))
             else:
-                if id % 4 == 1:
-                    _neighbors.append(self.get_node(id+1))
-                    _neighbors.append(self.get_node(id+3))
-                elif id % 4 == 2 or id % 4 == 3:
-                    _neighbors.append(self.get_node(id-1))
-                    _neighbors.append(self.get_node(id+1))
-                elif id % 4 == 0:
-                    _neighbors.append(self.get_node(id-1))
-                    _neighbors.append(self.get_node(id-3))
-                    
                 _neighbors.append(self.get_node(id-4))
-                _neighbors.append(self.get_node(id-8))
+            _neighbors.append(self.get_node(id-8))
                 
         return _neighbors
 
