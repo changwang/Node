@@ -4,8 +4,6 @@ Created on Sep 28, 2009
 @author: changwang
 '''
 
-from edu.wmich.nodes.node import Node
-
 class Graph:
     """ Graph represents the whole network,
     which contains the nodes in this network,
@@ -44,14 +42,14 @@ class Ring(Graph):
         _neighbors = []
         
         if node.get_id() == 1:
-            _neighbors.append(Node(len(self.nodes)))
-            _neighbors.append(Node(node.get_id() + 1))
+            _neighbors.append(self.get_node(len(self.nodes)))
+            _neighbors.append(self.get_node(node.get_id() + 1))
         elif node.get_id() == len(self.nodes):
-            _neighbors.append(Node(1))
-            _neighbors.append(Node(node.get_id() - 1))
+            _neighbors.append(self.get_node(1))
+            _neighbors.append(self.get_node(node.get_id() - 1))
         else:
-            _neighbors.append(Node(node.get_id() - 1))
-            _neighbors.append(Node(node.get_id() + 1))
+            _neighbors.append(self.get_node(node.get_id() - 1))
+            _neighbors.append(self.get_node(node.get_id() + 1))
         return _neighbors
 
 class Hypercube(Graph):
@@ -59,10 +57,70 @@ class Hypercube(Graph):
         Graph.__init__(self, nodes)
         
     def connect_nodes(self):
-        pass
+        for i in range(self.nodes_count()):
+            self.nodes[i].neighbors = self.__neighbors(self.nodes[i])
     
     def __neighbors(self, node):
-        pass
+        _neighbors = []
+        id = node.get_id()
+        if id <=8:
+            
+            if id <= 4:
+                if id % 4 == 1:
+                    _neighbors.append(self.get_node(id+1))
+                    _neighbors.append(self.get_node(id+3))
+                elif id % 4 == 2 or id % 4 == 3:
+                    _neighbors.append(self.get_node(id-1))
+                    _neighbors.append(self.get_node(id+1))
+                elif id % 4 == 0:
+                    _neighbors.append(self.get_node(id-1))
+                    _neighbors.append(self.get_node(id-3))
+                    
+                _neighbors.append(self.get_node(id+4))
+                _neighbors.append(self.get_node(id+8))
+                
+            else:
+                if id % 4 == 1:
+                    _neighbors.append(self.get_node(id+1))
+                    _neighbors.append(self.get_node(id+3))
+                elif id % 4 == 2 or id % 4 == 3:
+                    _neighbors.append(self.get_node(id-1))
+                    _neighbors.append(self.get_node(id+1))
+                elif id % 4 == 0:
+                    _neighbors.append(self.get_node(id-1))
+                    _neighbors.append(self.get_node(id-3))
+                    
+                _neighbors.append(self.get_node(id-4))
+                _neighbors.append(self.get_node(id+8))
+        else:
+            if id <= 12:
+                if id % 4 == 1:
+                    _neighbors.append(self.get_node(id+1))
+                    _neighbors.append(self.get_node(id+3))
+                elif id % 4 == 2 or id % 4 == 3:
+                    _neighbors.append(self.get_node(id-1))
+                    _neighbors.append(self.get_node(id+1))
+                elif id % 4 == 0:
+                    _neighbors.append(self.get_node(id-1))
+                    _neighbors.append(self.get_node(id-3))
+                    
+                _neighbors.append(self.get_node(id+4))
+                _neighbors.append(self.get_node(id-8))
+            else:
+                if id % 4 == 1:
+                    _neighbors.append(self.get_node(id+1))
+                    _neighbors.append(self.get_node(id+3))
+                elif id % 4 == 2 or id % 4 == 3:
+                    _neighbors.append(self.get_node(id-1))
+                    _neighbors.append(self.get_node(id+1))
+                elif id % 4 == 0:
+                    _neighbors.append(self.get_node(id-1))
+                    _neighbors.append(self.get_node(id-3))
+                    
+                _neighbors.append(self.get_node(id-4))
+                _neighbors.append(self.get_node(id-8))
+                
+        return _neighbors
 
 class CompleteGraph(Graph):
     """ Complete Graph with the node connected with each other nodes """

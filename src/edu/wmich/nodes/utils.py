@@ -14,52 +14,41 @@ def nodes_generator(count):
 
 def tree_generator(graph, root_id):
     root = TreeKnot(graph.get_node(root_id))
-    root.init_children()
                 
     tree = Tree(root)
+    root.init_children(tree)
     
-    temp_children = root.get_children()
-    for knot in temp_children:
+    temp_children = root.get_children()[:]
+    while(temp_children):
+        knot = temp_children[0]
         if tree.has_knot(knot):
-            continue
+            temp_children.remove(knot)
         else:
-            knot.init_children()
+#            knot.init_children(tree)
+            __init_children(knot, temp_children)
             tree.add_knot(knot)
             for k in knot.get_children():
-#                k = TreeKnot(i)
-                if tree.has_knot(k):
+                if tree.has_knot(k) or __in_temp(k, temp_children):
                     pass
                 else:
-                    temp_children.extend(knot.get_children())
+                    temp_children.append(k)
             temp_children.remove(knot)
-#    
-#    temp_children = root.get_children()
-#    for n in temp_children:
-#        if n in tree:
-#            continue
-#        else:
-#            tree.add_node(parent, child)
-#            temp_children.append(n.get_neighbors())
-    
-#    if len(root.children) > 0:
-#        for child in root.children:
-#            tree.add_node(root, child)
     
     return tree
 
-#def tree_generator(graph, root_node):
-#    tree = {}
-#    __insert_node(tree, root_node)
-#    if (root_node.has_neighbors()):
-#        for i in root_node.get_neighbors():
-#            __insert_node(tree, graph.get_node(i))
-#            
-#    return tree
-#
-#def __insert_node(tree, node):
-#    if (node.get_id() in tree):
-#        pass
-#    else:
-#        tree[node.get_id()] = tuple(node.get_neighbors())
-#    
-#    return tree
+def __init_children(knot, tmp_list):
+    if not tmp_list:
+        return
+    for n in knot.data.get_neighbors():
+        if __in_temp(TreeKnot(n), tmp_list):
+            continue
+        else:
+            knot.get_children().append(TreeKnot(n))
+
+def __in_temp(tk, tmp_list):
+    flag = False
+    for t in tmp_list:
+        if tk.get_data().get_id() == t.get_data().get_id():
+            flag = True
+            
+    return flag
