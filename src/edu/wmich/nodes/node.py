@@ -14,9 +14,6 @@ class Node:
     def __init__(self, id):
         self.id = id
         self.neighbors = []
-        
-    def broadcast(self, msg):
-        pass
 
     def get_id(self):
         return self.id

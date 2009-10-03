@@ -73,6 +73,11 @@ class Tree:
         
     def get_root(self):
         return self.root_knot
+    
+    def get_knot(self, id):
+        if id not in self.tree:
+            return None
+        return self.tree.get(id)
         
     def has_knot(self, knot):
         """ find out whether one knot is in the tree. """
@@ -84,11 +89,22 @@ class Tree:
     def knot_count(self):
         return len(self.tree.items())
     
+    def get_knot_parent(self, knot):
+        for key, value in self.tree.items():
+            if knot in value.get_children():
+                return self.get_knot(key)
+        return None
+    
     def print_tree(self, node):
         if node.is_leaf():
-            print node
-        else:
-            map(self.print_tree, node.get_children())
+            print '---- above knot is a leaf ----'
+            return
+        for n in node.get_children():
+            print '---- separator ----'
+            print self.get_knot_parent(n)
+            print '---- above knot is parent knot of the knot below ----'
+            print n
+            self.print_tree(n)
 
     def leaves(self):
         """ return all the leaves in the tree. """
@@ -105,7 +121,15 @@ class Tree:
         self.root_knot.update_weight()
         return self
     
+    def branch_count(self):
+        """ get the total hops in the tree. """
+        sum = 0
+        for n in self.tree.values():
+            sum += n.get_children_count()
+        return sum
+    
     def __find_max_children(self, knot):
+        """ find the max weight treeknot from the children list. """
         if knot.get_children_count() == 0:
             return knot
         else:
@@ -117,6 +141,7 @@ class Tree:
             return max
     
     def find_diameter(self, node):
+        """ find the diameter of the graph using the weight of each treeknot. """
         if node.is_leaf():
             return None
         else:
@@ -124,4 +149,3 @@ class Tree:
             self.path.append(m)
             self.find_diameter(m)
         return self.path
-        

@@ -26,9 +26,9 @@ class Graph:
         return sum([x.get_neighbors_count() for x in self.get_nodes()]) / 2
 
     def connect_nodes(self):
-        """ This method is a vitual method,
+        """ This method is a virtual method,
             each subclass should implement this method,
-            because each subclass has its own connection between nodes. """
+            because each subclass has its own connections between nodes. """
 
         raise NotImplementedError("You should implement this method")
 
@@ -104,7 +104,7 @@ class Hypercube(Graph):
         return _neighbors
 
 class CompleteGraph(Graph):
-    """ Complete Graph with the node connected with each other nodes """
+    """ Complete Graph with the node connected with each other nodes. """
     
     def __init__(self, nodes):
         Graph.__init__(self, nodes)
