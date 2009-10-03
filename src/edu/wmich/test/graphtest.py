@@ -5,9 +5,18 @@ Created on Sep 29, 2009
 '''
 import unittest
 
-from edu.wmich.nodes.graph import CompleteGraph
+from edu.wmich.nodes.graph import CompleteGraph, Graph
 from edu.wmich.nodes.utils import nodes_generator
 
+class GraphTestCase(unittest.TestCase):
+    def setUp(self):
+        self.graph = Graph(nodes_generator(5))
+    
+    def tearDown(self):
+        pass
+    
+    def testGetNodesCount(self):
+        self.assertEqual(5, self.graph.nodes_count())
 
 class RingTestCase(unittest.TestCase):
     

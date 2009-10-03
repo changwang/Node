@@ -12,21 +12,33 @@ class Graph:
 
     def __init__(self, nodes):
         self.nodes = nodes
+        
+    def get_nodes(self):
+        """ return the total nodes in this graph. """
+        return self.nodes
 
     def nodes_count(self):
+        """ return the total nodes count in this graph. """
         return len(self.nodes)
 
     def channel_count(self):
-        return sum([x.get_neighbors_count() for x in self.nodes]) / 2
-        
+        """ return the total channels in this graph. """
+        return sum([x.get_neighbors_count() for x in self.get_nodes()]) / 2
 
     def connect_nodes(self):
+        """ This method is a vitual method,
+            each subclass should implement this method,
+            because each subclass has its own connection between nodes. """
+
         raise NotImplementedError("You should implement this method")
 
     def get_node(self, id):
-        for i in range(len(self.nodes)):
-            if self.nodes[i].get_id() == id:
-                return self.nodes[i]
+        """ return the node specified by the id. """
+        for node in self.get_nodes():
+            if node.get_id() == id:
+                return node
+        # if the specified node is not exist in this graph.
+        return None
 
 class Ring(Graph):
     """ Ring graph with node connected with two nodes beside it. """
@@ -35,16 +47,16 @@ class Ring(Graph):
         Graph.__init__(self, nodes)
         
     def connect_nodes(self):
-        for i in range(len(self.nodes)):
-            self.nodes[i].neighbors = self.__neighbors(self.nodes[i])
+        for node in self.get_nodes():
+            node.set_neighbors(self.__neighbors(node))
     
     def __neighbors(self, node):
         _neighbors = []
         
         if node.get_id() == 1:
-            _neighbors.append(self.get_node(len(self.nodes)))
+            _neighbors.append(self.get_node(self.nodes_count()))
             _neighbors.append(self.get_node(node.get_id() + 1))
-        elif node.get_id() == len(self.nodes):
+        elif node.get_id() == self.nodes_count():
             _neighbors.append(self.get_node(1))
             _neighbors.append(self.get_node(node.get_id() - 1))
         else:
@@ -53,12 +65,14 @@ class Ring(Graph):
         return _neighbors
 
 class Hypercube(Graph):
+    """ Hypercube 4 with node connected with four nodes beside it. """
+    
     def __init__(self, nodes):
         Graph.__init__(self, nodes)
         
     def connect_nodes(self):
-        for i in range(self.nodes_count()):
-            self.nodes[i].neighbors = self.__neighbors(self.nodes[i])
+        for node in self.get_nodes():
+            node.set_neighbors(self.__neighbors(node))
     
     def __neighbors(self, node):
         _neighbors = []
@@ -96,13 +110,13 @@ class CompleteGraph(Graph):
         Graph.__init__(self, nodes)
 
     def connect_nodes(self):
-        for i in range(len(self.nodes)):
-            self.nodes[i].neighbors = self.__neighbors(self.nodes[i])
+        for node in self.get_nodes():
+            node.set_neighbors(self.__neighbors(node))
 
     def __neighbors(self, node):
         _neighbors = []
         
-        for i in range(len(self.nodes)):
-            if node.get_id() != self.nodes[i].get_id():
-                _neighbors.append(self.nodes[i])
+        for n in self.get_nodes():
+            if n.get_id() != node.get_id():
+                _neighbors.append(n)
         return _neighbors

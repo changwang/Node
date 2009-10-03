@@ -13,28 +13,21 @@ if __name__ == '__main__':
     rg = Ring(nodes_generator(10))
     rg.connect_nodes()
     
-    tree = tree_generator(rg, 2)
-    print tree.leaves()
-    
+    tree = tree_generator(rg, 3)
     print tree.update_weight().find_diameter(tree.get_root())
     
     print "============== Complete Graph =================="
     cg = CompleteGraph(nodes_generator(12))
     cg.connect_nodes()
     
-    tree = tree_generator(cg, 2)
-    print tree.leaves()
-    
+    tree = tree_generator(cg, 3)
     print tree.update_weight().find_diameter(tree.get_root())
-    
-    print 
     
     print "============== Hypercube 4 =================="
     hg = Hypercube(nodes_generator(16))
     hg.connect_nodes()
     
-    tree = tree_generator(hg, 2)
-    print tree.leaves()
+    tree = tree_generator(hg, 3)
     
     print tree.update_weight().find_diameter(tree.get_root())
     

@@ -18,9 +18,6 @@ class Node:
     def broadcast(self, msg):
         pass
 
-    def __str__(self):
-        return "Node: " + str(self.id)
-
     def get_id(self):
         return self.id
     
@@ -29,7 +26,12 @@ class Node:
 
     def get_neighbors(self):
         return self.neighbors
+    
+    def set_neighbors(self, neighbors=[]):
+        self.neighbors = neighbors
 
     def get_neighbors_count(self):
         return len(self.neighbors)
 
+    def __repr__(self):
+        return "Node: " + str(self.id)

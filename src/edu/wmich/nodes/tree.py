@@ -5,6 +5,8 @@ Created on Oct 1, 2009
 '''
 
 class TreeKnot:
+    """ TreeKnot represents the knot in a tree. """
+    
     def __init__(self, node):
         self.data = node
         self.weight = 1
@@ -17,7 +19,7 @@ class TreeKnot:
         return self.data
 
     def init_children(self, tree):
-        for n in self.data.get_neighbors():
+        for n in self.get_data().get_neighbors():
             if not tree.has_knot(TreeKnot(n)):
                 self.children.append(TreeKnot(n))
         
@@ -39,23 +41,30 @@ class TreeKnot:
         return self.weight
     
     def is_leaf(self):
+        """ whether this knot is a leaf in the tree. """
         return self.get_children_count() == 0
     
     def __repr__(self):
         return "TreeKnot: " + str(self.data.get_id())
         
 class Tree:
+    """ This tree is used to find the efficient way of broadcasting the msg from one
+    node to the other nodes and the diameter of the graph. """
     
     def __init__(self, root_knot):
         self.tree = {}
         self.root_knot = root_knot
-        self.tree[root_knot.data.get_id()] = root_knot
+        self.tree[root_knot.get_data().get_id()] = root_knot
+        self.path = [self.root_knot]
         
     def add_knot(self, knot):
         indexes = []
-        for i in range(len(knot.get_children())):
-            if self.has_knot(knot.get_children()[i]):
-                indexes.append(knot.get_children()[i])
+        
+        """ this step is used to remove the knot(s) which is existed in the tree
+         from the children list of one TreeKnot. """
+        for n in knot.get_children():
+            if self.has_knot(n):
+                indexes.append(n)
         
         for n in indexes:
             knot.get_children().remove(n)
@@ -66,28 +75,33 @@ class Tree:
         return self.root_knot
         
     def has_knot(self, knot):
-        if knot.data.get_id() in self.tree:
+        """ find out whether one knot is in the tree. """
+        if knot.get_data().get_id() in self.tree:
             return True
         else:
             return False
-        
+
     def knot_count(self):
         return len(self.tree.items())
     
-    def print_tree(self):
-        pass
-    
+    def print_tree(self, node):
+        if node.is_leaf():
+            print node
+        else:
+            map(self.print_tree, node.get_children())
+
     def leaves(self):
+        """ return all the leaves in the tree. """
         leaves = []
         for knot in self.tree.values():
             if knot.get_children_count() == 0:
                 leaves.append(knot)
         return leaves
-    
-    def root_weight(self):
-        return self.__weight(self.root_knot)
-    
+        
     def update_weight(self):
+        """ update the nodes' weight in the tree.
+            so we can find the diameter of the graph with it. """
+
         self.root_knot.update_weight()
         return self
     
@@ -96,21 +110,18 @@ class Tree:
             return knot
         else:
             max = knot.get_children()[0]
-            for x in knot.get_children():
-                if max.get_weight() < x.get_weight():
-                    max = x
+            for child in knot.get_children():
+                if max.get_weight() < child.get_weight():
+                    max = child
                     
             return max
     
     def find_diameter(self, node):
-        path = []
         if node.is_leaf():
-            path.append(node)
-            return path
+            return None
         else:
             m = self.__find_max_children(node)
-            psub = self.find_diameter(m)[:]
-            path.extend(psub)
-#            path.extend(self.find_diameter(self.__find_max_children(node)))
-        return path
+            self.path.append(m)
+            self.find_diameter(m)
+        return self.path
         
