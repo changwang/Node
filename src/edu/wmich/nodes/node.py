@@ -1,6 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 '''
 Created on Sep 28, 2009
-
 @author: changwang
 '''
 
@@ -8,9 +10,8 @@ class Node:
     """ Node represents the node in the network,
         which contains its identification
         and its neighbor's identification.
-        Between two nodes, there is a bidirectional channel.
-        """
-    
+        Between two nodes, there is a bidirectional channel. """
+
     def __init__(self, id):
         self.id = id
         self.neighbors = []
