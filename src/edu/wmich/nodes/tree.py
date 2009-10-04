@@ -160,7 +160,7 @@ class Tree:
         return self.path
     
     def print_diameter(self, path):
-        print 'THE LENGTH OF THE DIAMETER IS: ' + str(len(path))
+        print 'THE LENGTH OF THE DIAMETER IS: ' + str(len(path) - 1)
         print 'AND THE PATH IS: '
         for n in path:
             if n == path[-1]:
