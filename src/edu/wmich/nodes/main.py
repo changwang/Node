@@ -27,25 +27,21 @@ if __name__ == '__main__':
             sys.exit("THE ID SHOULD BE BETWEEN 1 AND 10")
         print "============== Ring =================="
         graph = Ring(nodes_generator(10))
-        graph.connect_nodes()
-        tree = tree_generator(graph, id_command)
     elif graph_command == 'hypercube' or graph_command == 'hc':
         if id_command < 1 or id_command > 16:
             sys.exit("THE ID SHOULD BE BETWEEN 1 AND 16")
         print "============== Hypercube 4 =================="
         graph = Hypercube(nodes_generator(16))
-        graph.connect_nodes()
-        tree = tree_generator(graph, id_command)
     elif graph_command == 'completegraph' or graph_command == 'cg':
         if id_command < 1 or id_command > 12:
             sys.exit("THE ID SHOULD BE BETWEEN 1 AND 12")
         print "============== Complete Graph =================="
         graph = CompleteGraph(nodes_generator(12))
-        graph.connect_nodes()
-        tree = tree_generator(graph, id_command)
     else:
         sys.exit("THE SPECIFIED GRAPH CAN'T BE HANDLED, CONTACT THE AUTHOR FOR MORE INFORMATION.")
-    
+
+    graph.connect_nodes()
+    tree = tree_generator(graph, id_command)
     print "THE TOTAL COST IN HOPS IS: " + str(tree.branch_count())
     print
     print "THE GENERATED TREE LOOKS LIKE THIS: "
